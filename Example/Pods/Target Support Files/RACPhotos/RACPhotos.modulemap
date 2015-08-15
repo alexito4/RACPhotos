@@ -1,0 +1,6 @@
+framework module RACPhotos {
+  umbrella header "RACPhotos-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,20 @@
+PODS:
+  - Nimble (1.0.0)
+  - Quick (0.3.1)
+  - RACPhotos (0.1.0)
+
+DEPENDENCIES:
+  - Nimble
+  - Quick (~> 0.3.1)
+  - RACPhotos (from `../`)
+
+EXTERNAL SOURCES:
+  RACPhotos:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Nimble: 8bee528e5fcc403653076545db562d2b5db7bb87
+  Quick: 824572d3d198d51e52cf4aa722cebf7e59952a35
+  RACPhotos: 98a8d325da86b54a50ceb9f47c164def99cf9c83
+
+COCOAPODS: 0.38.2
