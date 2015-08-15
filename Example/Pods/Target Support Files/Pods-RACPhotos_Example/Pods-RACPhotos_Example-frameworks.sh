@@ -52,8 +52,14 @@ code_sign_if_enabled() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework 'Pods-RACPhotos_Example/Box.framework'
   install_framework 'Pods-RACPhotos_Example/RACPhotos.framework'
+  install_framework 'Pods-RACPhotos_Example/ReactiveCocoa.framework'
+  install_framework 'Pods-RACPhotos_Example/Result.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework 'Pods-RACPhotos_Example/Box.framework'
   install_framework 'Pods-RACPhotos_Example/RACPhotos.framework'
+  install_framework 'Pods-RACPhotos_Example/ReactiveCocoa.framework'
+  install_framework 'Pods-RACPhotos_Example/Result.framework'
 fi

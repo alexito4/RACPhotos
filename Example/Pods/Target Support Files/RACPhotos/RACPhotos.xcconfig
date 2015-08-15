@@ -1,0 +1,1 @@
+RACPHOTOS_OTHER_LDFLAGS = -framework "Photos"

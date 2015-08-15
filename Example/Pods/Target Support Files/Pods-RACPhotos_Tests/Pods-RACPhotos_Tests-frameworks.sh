@@ -52,12 +52,18 @@ code_sign_if_enabled() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework 'Pods-RACPhotos_Tests/Box.framework'
   install_framework 'Pods-RACPhotos_Tests/RACPhotos.framework'
+  install_framework 'Pods-RACPhotos_Tests/ReactiveCocoa.framework'
+  install_framework 'Pods-RACPhotos_Tests/Result.framework'
   install_framework 'Pods-RACPhotos_Tests/Nimble.framework'
   install_framework 'Pods-RACPhotos_Tests/Quick.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework 'Pods-RACPhotos_Tests/Box.framework'
   install_framework 'Pods-RACPhotos_Tests/RACPhotos.framework'
+  install_framework 'Pods-RACPhotos_Tests/ReactiveCocoa.framework'
+  install_framework 'Pods-RACPhotos_Tests/Result.framework'
   install_framework 'Pods-RACPhotos_Tests/Nimble.framework'
   install_framework 'Pods-RACPhotos_Tests/Quick.framework'
 fi

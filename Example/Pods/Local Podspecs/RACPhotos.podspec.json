@@ -21,5 +21,11 @@
     "RACPhotos": [
       "Pod/Assets/*.png"
     ]
+  },
+  "frameworks": "Photos",
+  "dependencies": {
+    "ReactiveCocoa": [
+      "3.0-beta.6"
+    ]
   }
 }
