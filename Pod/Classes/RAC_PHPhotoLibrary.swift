@@ -1,6 +1,7 @@
 //
 //  RAC_PHPhotoLibrary.swift
-//  BWallpapers
+//  Originally build for BWallpapers.
+//  http://alejandromp.com/bwallpapers/
 //
 //  Created by Alejandro Martinez on 21/6/15.
 //  Copyright (c) 2015 Alejandro Martinez. All rights reserved.
@@ -9,9 +10,6 @@
 import Foundation
 import Photos
 import ReactiveCocoa
-
-// I would like all of this to be SignalProducers but flatMap only requieres a SignalProducer, and i don´t know any other way of combining SignalProducers.
-// All the Error types on SignalProducers have to be of the same type? it's not enoguht to be of the protocol?
 
 public enum RACPhotosError: ErrorType {
     case NotAuthorized(status: PHAuthorizationStatus)
@@ -23,6 +21,15 @@ public enum RACPhotosError: ErrorType {
         return NSError(domain: "RACPhotosError", code: 0, userInfo: nil)
     }
 }
+
+// Sends next event and inmediatly completes the Signal.
+// Usefoul for Signals that only have one event.
+private func sendNextAndComplete<T, E>(sink: SinkOf<Event<T, E>>, value: T) {
+    sendNext(sink, value)
+    sendCompleted(sink)
+}
+
+// MARK: Authorization
 
 extension PHPhotoLibrary {
     
@@ -36,8 +43,7 @@ extension PHPhotoLibrary {
                 PHPhotoLibrary.requestAuthorization({ (status) -> Void in
                     switch (status) {
                     case .Authorized:
-                        sendNext(sink, status)
-                        sendCompleted(sink)
+                        sendNextAndComplete(sink, status)
                     default:
                         sendError(sink, RACPhotosError.NotAuthorized(status: status))
                     }
@@ -45,11 +51,20 @@ extension PHPhotoLibrary {
             case .Restricted, .Denied:
                 sendError(sink, RACPhotosError.NotAuthorized(status: status))
             case .Authorized:
-                sendNext(sink, status)
-                sendCompleted(sink)
+                sendNextAndComplete(sink, status)
             }
             
         }
+    }
+    
+}
+
+// MARK: Images
+
+extension PHPhotoLibrary {
+    
+    public class func saveImage(image: UIImage, toCollection album: PHAssetCollection) -> SignalProducer<Void, RACPhotosError> {
+        return PHPhotoLibrary.sharedPhotoLibrary().saveImage(image, toCollection: album)
     }
     
     public func saveImage(image: UIImage, toCollection album: PHAssetCollection) -> SignalProducer<Void, RACPhotosError> {
@@ -62,16 +77,21 @@ extension PHPhotoLibrary {
                 let albumRequest = PHAssetCollectionChangeRequest(forAssetCollection: album)
                 albumRequest.addAssets([asset])
                 
-            }, completionHandler: { (completed, error) -> Void in
-                if completed {
-                    sendNext(sink, Void())
-                    sendCompleted(sink)
-                } else {
-                    sendError(sink, RACPhotosError.PhotoSaveFailed)
-                }
+                }, completionHandler: { (completed, error) -> Void in
+                    if completed {
+                        sendNextAndComplete(sink, Void())
+                    } else {
+                        sendError(sink, RACPhotosError.PhotoSaveFailed)
+                    }
             })
         }
     }
+    
+}
+
+// MARK: Collections
+
+extension PHPhotoLibrary {
     
     public func createCollectionWithTitle(title: String) -> SignalProducer<String, RACPhotosError> {
         return SignalProducer { sink, disposable in
@@ -87,8 +107,7 @@ extension PHPhotoLibrary {
             }, completionHandler: { (completed, error) -> Void in
                 if completed {
                     if let identifier = identifier {
-                        sendNext(sink, identifier)
-                        sendCompleted(sink)
+                        sendNextAndComplete(sink, identifier)
                     } else {
                         sendError(sink, RACPhotosError.CollectionCreationFailed)
                     }
@@ -104,14 +123,17 @@ extension PHPhotoLibrary {
 
 extension PHAssetCollection {
     
+    public class func createCollectionWithTitle(title: String) -> SignalProducer<String, RACPhotosError> {
+        return PHPhotoLibrary.sharedPhotoLibrary().createCollectionWithTitle(title)
+    }
+    
     public class func fetchCollectionWithIdentifier(identifier: String) -> SignalProducer<PHAssetCollection, RACPhotosError> {
         return SignalProducer { sink, disposable in
             let result = PHAssetCollection.fetchAssetCollectionsWithLocalIdentifiers([identifier], options: nil)
             let album = result.firstObject as? PHAssetCollection
             
             if let album = album {
-                sendNext(sink, album)
-                sendCompleted(sink)
+                sendNextAndComplete(sink, album)
             } else {
                 sendError(sink, RACPhotosError.CollectionNotFound)
             }
@@ -128,8 +150,7 @@ extension PHAssetCollection {
             let album = result.firstObject as? PHAssetCollection
             
             if let album = album {
-                sendNext(sink, album)
-                sendCompleted(sink)
+                sendNextAndComplete(sink, album)
             } else {
                 sendError(sink, RACPhotosError.CollectionNotFound)
             }
