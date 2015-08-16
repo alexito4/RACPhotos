@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "22658DE87492D1F5618C5056"
+               BlueprintIdentifier = "A7A84DD3DC53C065D1D9CF9A"
                BuildableName = "RACPhotos.framework"
                BlueprintName = "RACPhotos"
                ReferencedContainer = "container:Pods.xcodeproj">

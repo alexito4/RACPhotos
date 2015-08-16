@@ -14,7 +14,7 @@ import RACPhotos
 import Photos
 import ReactiveCocoa
 
-public func flatMap<T, U, E>(transform: T -> SignalProducer<U, E>) -> Signal<T, E> -> Signal<U, E> {
+public func flatMap<T, U, E>(transform: T -> SignalProducer<U, E>) -> SignalProducer<T, E> -> SignalProducer<U, E> {
     return flatMap(FlattenStrategy.Latest, transform)
 }
 
