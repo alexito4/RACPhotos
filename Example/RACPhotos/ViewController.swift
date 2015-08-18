@@ -7,12 +7,9 @@
 //
 
 import UIKit
-
-import RACPhotos
-
-// why I need to import Photos and RAC?
 import Photos
 import ReactiveCocoa
+import RACPhotos
 
 public func flatMap<T, U, E>(transform: T -> SignalProducer<U, E>) -> SignalProducer<T, E> -> SignalProducer<U, E> {
     return flatMap(FlattenStrategy.Latest, transform)

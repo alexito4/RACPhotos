@@ -33,6 +33,8 @@ private func sendNextAndComplete<T, E>(sink: SinkOf<Event<T, E>>, value: T) {
 
 extension PHPhotoLibrary {
     
+    /// Returns a SignalProducer that will send 1 event with the `PHAuthorizationStatus` when started.
+    /// It checks for the current `authorizationStatus` and only calls the system API if it's not determined.
     public class func requestAuthorization() -> SignalProducer<PHAuthorizationStatus, RACPhotosError> {
         return SignalProducer { sink, disposable in
             
@@ -63,10 +65,19 @@ extension PHPhotoLibrary {
 
 extension PHPhotoLibrary {
     
+    /// Calls `saveImage` using the `sharedPhotoLibrary` by default.
     public class func saveImage(image: UIImage, toCollection album: PHAssetCollection) -> SignalProducer<Void, RACPhotosError> {
         return PHPhotoLibrary.sharedPhotoLibrary().saveImage(image, toCollection: album)
     }
     
+    /**
+    Saves the given `image` to the `collection` when started.
+    
+    :param: image Image to be saved.
+    :param: album Collection where to save the image.
+    
+    :returns: SignalProducer with a Void event type.
+    */
     public func saveImage(image: UIImage, toCollection album: PHAssetCollection) -> SignalProducer<Void, RACPhotosError> {
         return SignalProducer { sink, disposable in
             self.performChanges({ () -> Void in
@@ -93,7 +104,16 @@ extension PHPhotoLibrary {
 
 extension PHPhotoLibrary {
     
-    public func createCollectionWithTitle(title: String) -> SignalProducer<String, RACPhotosError> {
+    public typealias CollectionIdentifier = String
+    
+    /**
+    Creates a new collection.
+    
+    :param: title
+    
+    :returns: SignalProducer that will send 1 next event with the identifier of the created collection.
+    */
+    public func createCollectionWithTitle(title: String) -> SignalProducer<CollectionIdentifier, RACPhotosError> {
         return SignalProducer { sink, disposable in
             
             var identifier: String?
@@ -123,10 +143,12 @@ extension PHPhotoLibrary {
 
 extension PHAssetCollection {
     
+    /// Calls `createCollectionWithTitle` using the `sharedPhotoLibrary` by default.
     public class func createCollectionWithTitle(title: String) -> SignalProducer<String, RACPhotosError> {
         return PHPhotoLibrary.sharedPhotoLibrary().createCollectionWithTitle(title)
     }
     
+    /// Returns a SignalProducer that will send 1 next event with a `PHAssetCollection` that has the given identifier.
     public class func fetchCollectionWithIdentifier(identifier: String) -> SignalProducer<PHAssetCollection, RACPhotosError> {
         return SignalProducer { sink, disposable in
             let result = PHAssetCollection.fetchAssetCollectionsWithLocalIdentifiers([identifier], options: nil)
@@ -139,7 +161,8 @@ extension PHAssetCollection {
             }
         }
     }
-    
+
+    /// Returns a SignalProducer that will send 1 next event with a `PHAssetCollection` that has the given `title`.
     public class func fetchCollectionWithTitle(title: String) -> SignalProducer<PHAssetCollection, RACPhotosError> {
         return SignalProducer { sink, disposable in
             
