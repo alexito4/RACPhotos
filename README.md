@@ -9,7 +9,7 @@ RACPhotos is a small wrapper of the Photos.framework using ReactiveCocoa 3. It l
 
 It was developed as part of [BWallpapers](https://itunes.apple.com/es/app/bwallpapers/id926031600?mt=8&uo=4).
 
-You can read the [blog post](http://http://www.alejandromp.com/blog/2015-08-19-photos-framework-ReactiveCocoa).
+You can read the [blog post](http://alejandromp.com/blog/2015/8/19/photos-framework-ReactiveCocoa).
 
 ## Usage
 
