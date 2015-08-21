@@ -1,6 +1,0 @@
-framework module Pods_RACPhotos_Tests {
-  umbrella header "Pods-RACPhotos_Tests-umbrella.h"
-
-  export *
-  module * { export * }
-}
