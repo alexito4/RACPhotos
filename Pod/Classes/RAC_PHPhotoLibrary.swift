@@ -24,7 +24,7 @@ public enum RACPhotosError: ErrorType {
 
 // Sends next event and inmediatly completes the Signal.
 // Usefoul for Signals that only have one event.
-private func sendNextAndComplete<T, E>(sink: SinkOf<Event<T, E>>, value: T) {
+private func sendNextAndComplete<T, E>(sink: Event<T, E>.Sink, _ value: T) {
     sendNext(sink, value)
     sendCompleted(sink)
 }
@@ -86,14 +86,17 @@ extension PHPhotoLibrary {
                 let asset = request.placeholderForCreatedAsset
                 
                 let albumRequest = PHAssetCollectionChangeRequest(forAssetCollection: album)
-                albumRequest.addAssets([asset])
                 
-                }, completionHandler: { (completed, error) -> Void in
-                    if completed {
-                        sendNextAndComplete(sink, Void())
-                    } else {
-                        sendError(sink, RACPhotosError.PhotoSaveFailed)
-                    }
+                if let asset = asset, albumRequest = albumRequest {
+                    albumRequest.addAssets([asset])
+                }
+                
+            }, completionHandler: { (completed, error) -> Void in
+                if completed {
+                    sendNextAndComplete(sink, Void())
+                } else {
+                    sendError(sink, RACPhotosError.PhotoSaveFailed)
+                }
             })
         }
     }

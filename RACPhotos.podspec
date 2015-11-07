@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = "RACPhotos"
-  s.version          = "0.1.0"
-  s.summary          = "A small wrapper of Photos.framework with ReactiveCocoa 3."
+  s.version          = "0.2.0"
+  s.summary          = "A small wrapper of Photos.framework with ReactiveCocoa 4."
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -39,5 +39,5 @@ Pod::Spec.new do |s|
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'Photos'
-  s.dependency 'ReactiveCocoa', '= 3.0-RC.1'
+  s.dependency 'ReactiveCocoa', '~> 4.0.4-alpha-1'
 end

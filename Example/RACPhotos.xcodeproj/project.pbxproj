@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3A5F44CAA2AE8DF46E6FC3A4 /* Pods_RACPhotos_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 622DCB042CF900D7CD4F5312 /* Pods_RACPhotos_Tests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		50BB8CBA42106937D9CDA1C6 /* Pods_RACPhotos_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4CE0E8017C29491AA643963 /* Pods_RACPhotos_Example.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		3A5F44CAA2AE8DF46E6FC3A4 /* Pods_RACPhotos_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 622DCB042CF900D7CD4F5312 /* Pods_RACPhotos_Tests.framework */; };
+		50BB8CBA42106937D9CDA1C6 /* Pods_RACPhotos_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4CE0E8017C29491AA643963 /* Pods_RACPhotos_Example.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		FA20667B1BEE2DCF009D3CC5 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2066791BEE2D4A009D3CC5 /* Tests.swift */; };
 		FA83E0541B7FCCF900EF4B09 /* image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FA83E0531B7FCCF900EF4B09 /* image.jpg */; };
 /* End PBXBuildFile section */
 
@@ -42,12 +42,12 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* RACPhotos_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RACPhotos_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		622DCB042CF900D7CD4F5312 /* Pods_RACPhotos_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RACPhotos_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D2BA33289180E395E884704 /* Pods-RACPhotos_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RACPhotos_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RACPhotos_Tests/Pods-RACPhotos_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		8AE28C91AF2C55D84DFFA0E1 /* Pods-RACPhotos_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RACPhotos_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-RACPhotos_Example/Pods-RACPhotos_Example.release.xcconfig"; sourceTree = "<group>"; };
 		A4CE0E8017C29491AA643963 /* Pods_RACPhotos_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RACPhotos_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F138D647F2A6BEBE7B44F142 /* Pods-RACPhotos_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RACPhotos_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RACPhotos_Tests/Pods-RACPhotos_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		FA2066791BEE2D4A009D3CC5 /* Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		FA83E0531B7FCCF900EF4B09 /* image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,7 +127,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				FA2066791BEE2D4A009D3CC5 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -212,6 +212,7 @@
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
@@ -371,7 +372,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				FA20667B1BEE2DCF009D3CC5 /* Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,6 +516,7 @@
 			baseConfigurationReference = F138D647F2A6BEBE7B44F142 /* Pods-RACPhotos_Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -526,6 +528,7 @@
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RACPhotos_Example.app/RACPhotos_Example";
 			};
 			name = Debug;
@@ -535,6 +538,7 @@
 			baseConfigurationReference = 6D2BA33289180E395E884704 /* Pods-RACPhotos_Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
