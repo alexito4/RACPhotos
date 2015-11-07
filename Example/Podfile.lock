@@ -1,30 +1,24 @@
 PODS:
-  - Box (1.2.2)
-  - Nimble (1.0.0)
-  - Quick (0.3.1)
-  - RACPhotos (0.1.0):
-    - ReactiveCocoa (= 3.0-RC.1)
-  - ReactiveCocoa (3.0-RC.1):
-    - Box (~> 1.2.0)
-    - ReactiveCocoa/UI (= 3.0-RC.1)
-    - Result (~> 0.4.1)
-  - ReactiveCocoa/Core (3.0-RC.1):
-    - Box (~> 1.2.0)
+  - Nimble (3.0.0)
+  - Quick (0.8.0)
+  - RACPhotos (0.2.0):
+    - ReactiveCocoa (~> 4.0.4-alpha-1)
+  - ReactiveCocoa (4.0.4-alpha-1):
+    - ReactiveCocoa/UI (= 4.0.4-alpha-1)
+    - Result (~> 0.6-beta.1)
+  - ReactiveCocoa/Core (4.0.4-alpha-1):
     - ReactiveCocoa/no-arc
-    - Result (~> 0.4.1)
-  - ReactiveCocoa/no-arc (3.0-RC.1):
-    - Box (~> 1.2.0)
-    - Result (~> 0.4.1)
-  - ReactiveCocoa/UI (3.0-RC.1):
-    - Box (~> 1.2.0)
+    - Result (~> 0.6-beta.1)
+  - ReactiveCocoa/no-arc (4.0.4-alpha-1):
+    - Result (~> 0.6-beta.1)
+  - ReactiveCocoa/UI (4.0.4-alpha-1):
     - ReactiveCocoa/Core
-    - Result (~> 0.4.1)
-  - Result (0.4.4):
-    - Box (~> 1.2)
+    - Result (~> 0.6-beta.1)
+  - Result (0.6.0-beta.6)
 
 DEPENDENCIES:
   - Nimble
-  - Quick (~> 0.3.1)
+  - Quick (~> 0.8)
   - RACPhotos (from `../`)
 
 EXTERNAL SOURCES:
@@ -32,11 +26,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Box: a92e8aa4c099e6bc0733829665caf9e668ef53b8
-  Nimble: 8bee528e5fcc403653076545db562d2b5db7bb87
-  Quick: 824572d3d198d51e52cf4aa722cebf7e59952a35
-  RACPhotos: 56087a626ffa392fd040b35f2d7117490aa9fd07
-  ReactiveCocoa: c85fe01be4e047dc1d9fba3e1e0b7070846d3296
-  Result: b44f6bc8762bbffaf2c5df58f2c7d12c3496ced8
+  Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
+  Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
+  RACPhotos: 303b51a848f2663ea7807312f9767e5bc611f7b8
+  ReactiveCocoa: 618a2fc13d4ed80e380aa6fa56547cef43c7341d
+  Result: dc390d0b58f9ec43fcd536f1ebdd130803cc6cbc
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

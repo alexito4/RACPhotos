@@ -11,8 +11,10 @@ import Photos
 import ReactiveCocoa
 import RACPhotos
 
-public func flatMap<T, U, E>(transform: T -> SignalProducer<U, E>) -> SignalProducer<T, E> -> SignalProducer<U, E> {
-    return flatMap(FlattenStrategy.Latest, transform)
+extension SignalProducer {
+    public func flatMap<U>(transform: T -> ReactiveCocoa.SignalProducer<U, E>) -> ReactiveCocoa.SignalProducer<U, E> {
+        return self.flatMap(FlattenStrategy.Latest, transform: transform)
+    }
 }
 
 class ViewController: UIViewController {
@@ -34,28 +36,27 @@ class ViewController: UIViewController {
         let fetch = PHAssetCollection.fetchCollectionWithTitle(title)
         
         // Creates and fetches a new collection with the given title
-        let createAndFetch = PHAssetCollection.createCollectionWithTitle(title)
-            |> flatMap { identifier in PHAssetCollection.fetchCollectionWithIdentifier(identifier) }
+        let createAndFetch = PHAssetCollection.createCollectionWithTitle(title).flatMap { identifier in PHAssetCollection.fetchCollectionWithIdentifier(identifier)
+        }
         
         // Retrieves the album with the given title. New or already created!
-        let retreiveAlbum = fetch |> catch { _ in createAndFetch }
+        let retreiveAlbum = fetch.flatMapError { _ in createAndFetch }
         
-        auth
-            |> flatMap { _ in
+        auth.flatMap { _ in
                 retreiveAlbum
-            }
-            |> flatMap { collection in
+            }.flatMap { collection in
                 PHPhotoLibrary.saveImage(image, toCollection: collection)
-            }
-            |> start(
-                error: {error in
-                    println("Error \(error)")
-                },
-                completed: {
-                    println("Image Saved")
-                },
-                interrupted: { println("Interrupted") },
-                next: { println("Next")})
+            }.on(error: { error in
+                    print("Error \(error)")
+                }, completed: {
+                    print("Image Saved")
+                }, interrupted: {
+                    print("Interrupted")
+                }, next: {
+                    print("Next")
+                }
+            ).start()
     }
+    
 }
 
