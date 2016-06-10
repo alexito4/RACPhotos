@@ -24,9 +24,11 @@ public enum RACPhotosError: ErrorType {
 
 // Sends next event and inmediatly completes the Signal.
 // Usefoul for Signals that only have one event.
-private func sendNextAndComplete<T, E>(sink: Event<T, E>.Sink, _ value: T) {
-    sendNext(sink, value)
-    sendCompleted(sink)
+extension Observer {
+    public func sendNextAndComplete(value: Value) {
+        sendNext(value)
+        sendCompleted()
+    }
 }
 
 // MARK: Authorization
@@ -36,8 +38,9 @@ extension PHPhotoLibrary {
     /// Returns a SignalProducer that will send 1 event with the `PHAuthorizationStatus` when started.
     /// It checks for the current `authorizationStatus` and only calls the system API if it's not determined.
     public class func requestAuthorization() -> SignalProducer<PHAuthorizationStatus, RACPhotosError> {
-        return SignalProducer { sink, disposable in
-            
+        
+        
+        return SignalProducer({ (observer, disposable) in
             let status = PHPhotoLibrary.authorizationStatus()
             
             switch status {
@@ -45,18 +48,17 @@ extension PHPhotoLibrary {
                 PHPhotoLibrary.requestAuthorization({ (status) -> Void in
                     switch (status) {
                     case .Authorized:
-                        sendNextAndComplete(sink, status)
+                        observer.sendNextAndComplete(status)
                     default:
-                        sendError(sink, RACPhotosError.NotAuthorized(status: status))
+                        observer.sendFailed(RACPhotosError.NotAuthorized(status: status))
                     }
                 })
             case .Restricted, .Denied:
-                sendError(sink, RACPhotosError.NotAuthorized(status: status))
+                observer.sendFailed(RACPhotosError.NotAuthorized(status: status))
             case .Authorized:
-                sendNextAndComplete(sink, status)
+                observer.sendNextAndComplete(status)
             }
-            
-        }
+        })
     }
     
 }
@@ -79,7 +81,7 @@ extension PHPhotoLibrary {
     :returns: SignalProducer with a Void event type.
     */
     public func saveImage(image: UIImage, toCollection album: PHAssetCollection) -> SignalProducer<Void, RACPhotosError> {
-        return SignalProducer { sink, disposable in
+        return SignalProducer { observer, disposable in
             self.performChanges({ () -> Void in
                 
                 let request = PHAssetChangeRequest.creationRequestForAssetFromImage(image)
@@ -93,9 +95,9 @@ extension PHPhotoLibrary {
                 
             }, completionHandler: { (completed, error) -> Void in
                 if completed {
-                    sendNextAndComplete(sink, Void())
+                    observer.sendNextAndComplete(Void())
                 } else {
-                    sendError(sink, RACPhotosError.PhotoSaveFailed)
+                    observer.sendFailed(RACPhotosError.PhotoSaveFailed)
                 }
             })
         }
@@ -117,7 +119,7 @@ extension PHPhotoLibrary {
     :returns: SignalProducer that will send 1 next event with the identifier of the created collection.
     */
     public func createCollectionWithTitle(title: String) -> SignalProducer<CollectionIdentifier, RACPhotosError> {
-        return SignalProducer { sink, disposable in
+        return SignalProducer { observer, disposable in
             
             var identifier: String?
             
@@ -130,12 +132,12 @@ extension PHPhotoLibrary {
             }, completionHandler: { (completed, error) -> Void in
                 if completed {
                     if let identifier = identifier {
-                        sendNextAndComplete(sink, identifier)
+                        observer.sendNextAndComplete(identifier)
                     } else {
-                        sendError(sink, RACPhotosError.CollectionCreationFailed)
+                        observer.sendFailed(RACPhotosError.CollectionCreationFailed)
                     }
                 } else {
-                    sendError(sink, RACPhotosError.CollectionCreationFailed)
+                    observer.sendFailed(RACPhotosError.CollectionCreationFailed)
                 }
                 
             })
@@ -153,21 +155,21 @@ extension PHAssetCollection {
     
     /// Returns a SignalProducer that will send 1 next event with a `PHAssetCollection` that has the given identifier.
     public class func fetchCollectionWithIdentifier(identifier: String) -> SignalProducer<PHAssetCollection, RACPhotosError> {
-        return SignalProducer { sink, disposable in
+        return SignalProducer { observer, disposable in
             let result = PHAssetCollection.fetchAssetCollectionsWithLocalIdentifiers([identifier], options: nil)
             let album = result.firstObject as? PHAssetCollection
             
             if let album = album {
-                sendNextAndComplete(sink, album)
+                observer.sendNextAndComplete(album)
             } else {
-                sendError(sink, RACPhotosError.CollectionNotFound)
+                observer.sendFailed(RACPhotosError.CollectionNotFound)
             }
         }
     }
 
     /// Returns a SignalProducer that will send 1 next event with a `PHAssetCollection` that has the given `title`.
     public class func fetchCollectionWithTitle(title: String) -> SignalProducer<PHAssetCollection, RACPhotosError> {
-        return SignalProducer { sink, disposable in
+        return SignalProducer { observer, disposable in
             
             let options = PHFetchOptions()
             options.predicate = NSPredicate(format: "title == %@", title)
@@ -176,9 +178,9 @@ extension PHAssetCollection {
             let album = result.firstObject as? PHAssetCollection
             
             if let album = album {
-                sendNextAndComplete(sink, album)
+                observer.sendNextAndComplete(album)
             } else {
-                sendError(sink, RACPhotosError.CollectionNotFound)
+                observer.sendFailed(RACPhotosError.CollectionNotFound)
             }
         }
     }

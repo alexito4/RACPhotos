@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "RACPhotos"
-  s.version          = "0.2.0"
+  s.version          = "0.3.0"
   s.summary          = "A small wrapper of Photos.framework with ReactiveCocoa 4."
 
 # This description is used to generate tags and improve search results.
@@ -33,11 +33,11 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*'
-  s.resource_bundles = {
-    'RACPhotos' => ['Pod/Assets/*.png']
-  }
+  # s.resource_bundles = {
+  #   'RACPhotos' => ['Pod/Assets/*.png']
+  # }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'Photos'
-  s.dependency 'ReactiveCocoa', '~> 4.0.4-alpha-1'
+  s.dependency 'ReactiveCocoa', '~> 4.1'
 end

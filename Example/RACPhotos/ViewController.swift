@@ -12,9 +12,11 @@ import ReactiveCocoa
 import RACPhotos
 
 extension SignalProducer {
-    public func flatMap<U>(transform: T -> ReactiveCocoa.SignalProducer<U, E>) -> ReactiveCocoa.SignalProducer<U, E> {
-        return self.flatMap(FlattenStrategy.Latest, transform: transform)
+    
+    public func flatMap<U>(transform: Value -> SignalProducer<U, Error>) -> SignalProducer<U, Error> {
+        return flatMap(.Latest, transform: transform)
     }
+    
 }
 
 class ViewController: UIViewController {
@@ -43,10 +45,11 @@ class ViewController: UIViewController {
         let retreiveAlbum = fetch.flatMapError { _ in createAndFetch }
         
         auth.flatMap { _ in
-                retreiveAlbum
+            retreiveAlbum
             }.flatMap { collection in
                 PHPhotoLibrary.saveImage(image, toCollection: collection)
-            }.on(error: { error in
+            }.on(
+                failed: { error in
                     print("Error \(error)")
                 }, completed: {
                     print("Image Saved")

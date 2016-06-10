@@ -1,13 +1,11 @@
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
-target 'RACPhotos_Example', :exclusive => true do
-  pod "RACPhotos", :path => "../"
-end
-
-target 'RACPhotos_Tests', :exclusive => true do
+target 'RACPhotos_Example' do
   pod "RACPhotos", :path => "../"
 
-  pod 'Quick', '~> 0.8'
-  pod 'Nimble'
+  target 'RACPhotos_Tests' do
+    pod 'Quick', '~> 0.9'
+    pod 'Nimble', '~> 4.0'
+  end
 end
